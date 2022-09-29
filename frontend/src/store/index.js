@@ -35,6 +35,10 @@ const store = createStore({
       email: "",
       photo: "",
     },
+    postInfos: {
+      description: "",
+      image: "",
+    },
   },
   mutations: {
     setStatus: function (state, status) {
@@ -44,6 +48,7 @@ const store = createStore({
       instance.defaults.headers.common["Authorization"] = user.token;
       localStorage.setItem("user", JSON.stringify(user));
       state.user = user;
+      console.log(user);
     },
     userInfos: function (state, userInfos) {
       state.userInfos = userInfos;
@@ -54,6 +59,9 @@ const store = createStore({
         token: "",
       };
       localStorage.removeItem("user");
+    },
+    postInfos: function (state, postInfos) {
+      state.postInfos = postInfos;
     },
   },
   actions: {
@@ -90,10 +98,30 @@ const store = createStore({
       });
     },
     getUserInfos: ({ commit }) => {
+      console.log("getUserInfos " + user.userId);
+      console.log(
+        "id en storage " + JSON.parse(localStorage.getItem("user")).userId
+      );
       instance
-        .post("/infos")
+        .get("auth/infos/" + JSON.parse(localStorage.getItem("user")).userId)
         .then(function (response) {
-          commit("userInfos", response.data.infos);
+          commit("userInfos", response.data);
+          console.log(response.data);
+          return response;
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch(function () {});
+    },
+    createPost: ({ commit }, postInfos) => {
+      console.log("yo");
+      instance
+        .post("post", postInfos)
+        .then(function (response) {
+          commit(response.data);
+          console.log(response.data);
+          return response;
         })
         .catch(function () {});
     },

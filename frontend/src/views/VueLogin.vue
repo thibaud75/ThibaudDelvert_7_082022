@@ -110,17 +110,25 @@
             prenom: this.prenom,
             password: this.password,
           }).then(function () {
-            self.login();
-            console.log("yo");
+            // self.login();
+            self.switchToLogin();
           }, function (error) {
             console.log(error);
           })
         },
-      }
+      },
+      beforeCreate: function() {
+        document.body.className = 'login';
+    }
     }
     </script>
   
+
+    
+
   <style scoped>
+
+
     .logo{
       margin-bottom: 5%;
     }

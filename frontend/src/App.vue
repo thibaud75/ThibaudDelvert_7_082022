@@ -35,6 +35,10 @@ export default {
     padding:32px;
   }
   
+  body.social{
+    display: block;
+  }
+
   img {
     max-width: 100%;
     border-radius: 8px;
@@ -95,4 +99,3 @@ export default {
     }
   
   </style>
-  
