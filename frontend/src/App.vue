@@ -19,7 +19,7 @@ export default {
     margin:0;
     padding: 0;
     box-sizing: border-box;
-    outline: 2px solid orangered;
+    outline: 2px solid rgb(11, 23, 189);
   }
   
   #app {
@@ -97,5 +97,27 @@ export default {
       cursor:not-allowed;
       background:#cecece;
     }
-  
+    
+    h2{
+      text-align: center;
+    }
+    
+    p{
+      text-align: center;
+      margin: 2%;
+    }
+
+    ul {
+      list-style-type: none;
+    }
+
+    .form-row{
+      margin-top: 2%;
+    }
+
+    a{
+      text-decoration: none;
+      color: black;
+    }
+
   </style>

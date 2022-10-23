@@ -37,8 +37,21 @@ const store = createStore({
     },
     postInfos: {
       description: "",
-      image: "",
+      title: "",
+      userId: "",
+      _id: "",
+      userLiked: [],
+      likes: "",
+      // image: "",
     },
+    image: "",
+    // getOnePost: {
+    //   description: "",
+    //   title: "",
+    //   userId: "",
+    //   _id: "",
+    // },
+    getOnePost: null,
   },
   mutations: {
     setStatus: function (state, status) {
@@ -63,8 +76,12 @@ const store = createStore({
     postInfos: function (state, postInfos) {
       state.postInfos = postInfos;
     },
+    getOnePost: function (state, getOnePost) {
+      state.getOnePost = getOnePost;
+    },
   },
   actions: {
+    // ROUTE USER
     login: ({ commit }, userInfos) => {
       commit("setStatus", "loading");
       return new Promise((resolve, reject) => {
@@ -114,10 +131,57 @@ const store = createStore({
         })
         .catch(function () {});
     },
+
+    // ROUTE POST
     createPost: ({ commit }, postInfos) => {
-      console.log("yo");
       instance
         .post("post", postInfos)
+        .then(function (response) {
+          commit(response.data);
+          console.log(response.data);
+          return response;
+        })
+        .catch(function () {});
+    },
+    getAllPosts: ({ commit }) => {
+      instance
+        .get("post")
+        .then(function (response) {
+          commit("postInfos", response.data);
+          console.log(response.data);
+          return response;
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch(function () {});
+    },
+    getPostInfos: ({ commit }, postId) => {
+      instance
+        .get("post/" + postId)
+        .then(function (response) {
+          commit("getOnePost", response.data);
+          console.log(response.data);
+          return response;
+        })
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch(function () {});
+    },
+    modifyPost: ({ commit }, [id, getOnePost]) => {
+      instance
+        .put(`/post/${id}`, getOnePost)
+        .then(function (response) {
+          commit(response.data);
+          console.log(response.data);
+          return response;
+        })
+        .catch(function () {});
+    },
+    likePost: ({ commit }, [id, postInfos]) => {
+      instance
+        .post(`/post/${id}/like`, postInfos)
         .then(function (response) {
           commit(response.data);
           console.log(response.data);

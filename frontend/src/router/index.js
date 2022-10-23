@@ -1,8 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
+
 import Login from "@/views/VueLogin.vue";
 import Profile from "@/views/VueProfile.vue";
 import Social from "@/views/VueSocial.vue";
+import Newpost from "@/views/VueNewPost.vue";
 import Post from "@/views/VuePost.vue";
+import Edit from "@/views/VueEdit.vue";
 
 const routes = [
   {
@@ -23,9 +26,21 @@ const routes = [
     props: true,
   },
   {
+    name: "newPost",
+    path: "/newpost",
+    component: Newpost,
+    props: true,
+  },
+  {
     name: "Post",
-    path: "/post",
+    path: "/post/:id",
     component: Post,
+    props: true,
+  },
+  {
+    name: "Edit",
+    path: "/edit/:id",
+    component: Edit,
     props: true,
   },
 ];
