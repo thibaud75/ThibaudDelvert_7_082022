@@ -7,11 +7,17 @@
 
     <div class="card">
 
-      <ul>
-        <li v-for="onePost in post">
-          <router-link :to="`/post/${onePost._id}`" @click.native="getOnePost(onePost._id)">
-            <h2>{{onePost.title}} par {{user.prenom}}</h2>
-            <p>{{onePost.description}}</p>
+      <ul class="ul--social">
+        
+        <!-- <li class="li-social" v-for="onePost in post.sort((a, b) => (b.timestamp > a.timestamp) ? 1 : -1)"> -->
+        <li class="li--social" v-for="onePost in post">
+          <router-link :to="`/post/${onePost._id}`">
+
+            <div class="div--social">
+                <h2>{{onePost.title}} par {{onePost.auteur}}</h2>
+                <img v-bind:src="onePost.imageUrl" v-bind:alt="onePost.title" class="img--social">
+            </div>
+            
           </router-link>
         </li>
       </ul>
@@ -46,11 +52,6 @@
   export default {
     name:   'VueSocial',
     mounted: function () {
-      console.log(this.$store.state.user);
-      if (this.$store.state.user.userId == -1) {
-        this.$router.push('/');
-        return ;
-      }
       this.$store.dispatch('getUserInfos');
       this.$store.dispatch('getAllPosts');
       // this.$store.dispatch('getPostInfos');
@@ -60,7 +61,8 @@
         user: 'userInfos',
         post: 'postInfos',
         yo: 'getOnePost',
-      })
+        auth: 'user',
+      }),  
     },
     methods: {
       logout: function () {
@@ -80,7 +82,9 @@
         this.$router.push('/post?id=' + id)
       },
       getOnePost: function(id) {
-        axios.get("http://localhost:3000/api/post/" + id)
+        axios.get("http://localhost:3000/api/post/" + id, {headers: {
+            Authorization: "Bearer " + JSON.parse(localStorage.getItem("user")).token,
+        },})
         
         .then(this.$router.push("/post/" + id))
         .then((response) => {
@@ -88,10 +92,6 @@
           return response;
         })
       },
-      // modifyPost: function(id){
-      //   axios.put("http://localhost:3000/api/post/" + id)
-      //   .then(this.$router.push('/post?id=' + id))
-      // },
   }, 
     beforeCreate: function() {
         document.body.className = 'social';
@@ -131,4 +131,33 @@
     }
 
 
+    .img--social{
+      max-width: 100%;
+      max-height: 100%;
+      background-size: 150px;
+      padding: 2%;
+
+    }
+
+    .div--social{
+
+    }
+
+
+    .ul--social{
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .li--social{
+      border: 2px solid #4E5166;
+      margin: 1%;
+      width: 18%;
+      background-color: #FFD7D7;
+      transition: all 0.1s ease-in-out;
+
+    }
+
+    h2{
+      margin-bottom: 5%;
+    }
 </style>

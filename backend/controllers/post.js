@@ -3,8 +3,8 @@ const fs = require("fs");
 
 exports.createPost = (req, res, next) => {
   console.log(req.body.post);
-  console.log(req.file);
-  const postObject = req.body.post;
+  console.log(req.file.filename);
+  const postObject = JSON.parse(req.body.post);
   delete postObject._id;
   const post = new Post({
     ...postObject,
@@ -50,13 +50,13 @@ exports.getOnePost = (req, res, next) => {
 };
 
 exports.modifyPost = (req, res, next) => {
-  console.log(req.params.id);
+  // console.log(req.params.id);
   const postObject = req.file
     ? {
-        ...req.body.post,
-        // imageUrl: `${req.protocol}://${req.get("host")}/images/${
-        //   req.file.filename
-        // }`,
+        ...JSON.parse(req.body.post),
+        imageUrl: `${req.protocol}://${req.get("host")}/images/${
+          req.file.filename
+        }`,
       }
     : { ...req.body };
 
@@ -86,14 +86,14 @@ exports.deletePost = (req, res, next) => {
       // if (post.userId != req.auth.userId) {
       //   res.status(401).json({ message: "Not authorized" });
       // } else {
-      // const filename = post.imageUrl.split("/images/")[1];
-      // fs.unlink(`images/${filename}`, () => {
-      Post.deleteOne({ _id: req.params.id })
-        .then(() => {
-          res.status(200).json({ message: "Objet supprimé !" });
-        })
-        .catch((error) => res.status(401).json({ error }));
-      // });
+      const filename = post.imageUrl.split("/images/")[1];
+      fs.unlink(`images/${filename}`, () => {
+        Post.deleteOne({ _id: req.params.id })
+          .then(() => {
+            res.status(200).json({ message: "Objet supprimé !" });
+          })
+          .catch((error) => res.status(401).json({ error }));
+      });
       // }
     })
     .catch((error) => {

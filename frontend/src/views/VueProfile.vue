@@ -1,5 +1,10 @@
 <template>
-    <div class="card">
+
+    <div class ="logo">
+        <img src="../assets/icon-left-font-monochrome-black.png" alt="logo groupomania" class="logo__img">
+    </div>
+
+    <div class="card card--auth">
       <h1 class="card__title">Bienvenue</h1>
       <p class="card__info">{{user.prenom}}</p> 
       <p class="card__info">{{user.nom}} </p> 
@@ -54,6 +59,7 @@
     
     .card__info{
       margin-bottom: 2%;
+      border: 2px solid #4E5166;
     }
 
 

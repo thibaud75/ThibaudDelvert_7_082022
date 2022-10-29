@@ -1,20 +1,28 @@
 <template>
+  
+        <div class ="logo">
+          <img src="../assets/icon-left-font-monochrome-black.png" alt="logo groupomania" class="logo__img">
+        </div>
+
         <div class="card">
-            <div class="form-row">
-              <form method="post">
-                <label for="title">Titre</label>
-                <input type="text"  id="title" v-model ="title">
 
-                <label for="description">Description en rapide</label>
-                <input type="text"  id="description" v-model ="description">
+            <form id="form">
 
-                <input type="file" accept="image/*" @change=onFileChange >
+              <label for="title">Titre</label>
+              <input type="text" id="title" v-model="title">
 
-                <button @click="createPost()" class="button">
-                  Publier mon post    
-                </button>
-              </form>
-            </div>
+              <label for="auteur">Auteur</label>
+              <input type="text" id="auteur" v-model="auteur">
+
+
+              <label for="description">Description</label>
+              <textarea id="description" class="form--textarea" rows="5" v-model="description"></textarea>
+
+              <input type="file" id="file" class="button" ref="file" v-on:change="onFileChange"/>
+
+              <button type="submit" class="button" @click="createPost()" :class="{'button--disabled' : !validatedFields}">Publier mon post</button>
+
+           </form>
           </div>
 </template>
 
@@ -24,51 +32,63 @@
 
 export default {
     name: 'VueNewPost',
+    data: function () {
+        return {
+          title: '',
+          description: '',
+          auteur: '',
+        }
+      },
+    computed: {
+      validatedFields: function () {
+
+      if (this.title != "" && this.description != "" && this.auteur != "") {
+        return true;
+      } else {
+        return false;
+        }
+      
+       }
+    },
     methods: {
         createPost: function () {
-          this.$store.dispatch('createPost', {
-            post: {
-              userId: JSON.parse(localStorage.getItem("user")).userId,
-              description: this.description,
-              title: this.title,
-            },
-            image: this.image,
+ 
+          var form = document.getElementById('form');
+          var formData = new FormData(form);
+          const timestamp = Date.now();
+          console.log(timestamp);
 
-          }).then( () => {
+          formData.append('post', JSON.stringify(
+            {
+              userId: JSON.parse(localStorage.getItem("user")).userId,
+              title: this.title, 
+              description: this.description,
+              auteur: this.auteur,
+              timestamp,
+            }))
+
+
+          formData.append('image', this.file)
+
+          this.$store.dispatch('createPost', formData)
+          .then(() => {
             this.$router.push('/social');
           }, function (error) {
             console.log(error);
           })
         },
-        onFileChange(e) {
-        var files = e.target.files || e.dataTransfer.files;
-        if (!files.length)
-        return;
-        this.createImage(files[0]);
-      },
-      createImage(file) {
-      var image = new Image();
-      var reader = new FileReader();
-      var vm = this;
 
-      reader.onload = (e) => {
-        vm.image = e.target.result;
-      };
-      reader.readAsDataURL(file);
+
+    onFileChange(e) {
+      console.log(e);
+      this.file = e.target.files[0];
     },
 
-// onFileAdded(event)
-// {
-//     var file = event.target.files[0];
-//     this.sauceForm.get('image').setValue(file);
-//     this.sauceForm.updateValueAndValidity();
-//     var reader_1 = new FileReader();
-//     reader_1.onload = function () {
-//         this.imagePreview = reader_1.result;
-//     };
-//     reader_1.readAsDataURL(file);
-// }
+    
+  },
 
+  beforeCreate: function() {
+      document.body.className = '';
   }
 }
 
@@ -76,4 +96,21 @@ export default {
 
 <style scoped>
 
+.card{
+  
+}
+
+#form{
+  display: flex;
+  flex-direction: column;
+}
+
+#form input{
+  margin-top: 1%;
+}
+
+.form--textarea{
+  height: 100px;
+  margin-top: 1%;
+}
 </style>

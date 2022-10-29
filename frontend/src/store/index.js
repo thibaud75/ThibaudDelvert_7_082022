@@ -24,6 +24,12 @@ if (!user) {
   }
 }
 
+let axiosAuth = {
+  headers: {
+    Authorization: "Bearer " + user.token,
+  },
+};
+
 // Create a new store instance.
 const store = createStore({
   state: {
@@ -42,15 +48,8 @@ const store = createStore({
       _id: "",
       userLiked: [],
       likes: "",
-      // image: "",
+      image: "",
     },
-    image: "",
-    // getOnePost: {
-    //   description: "",
-    //   title: "",
-    //   userId: "",
-    //   _id: "",
-    // },
     getOnePost: null,
   },
   mutations: {
@@ -61,7 +60,6 @@ const store = createStore({
       instance.defaults.headers.common["Authorization"] = user.token;
       localStorage.setItem("user", JSON.stringify(user));
       state.user = user;
-      console.log(user);
     },
     userInfos: function (state, userInfos) {
       state.userInfos = userInfos;
@@ -135,17 +133,18 @@ const store = createStore({
     // ROUTE POST
     createPost: ({ commit }, postInfos) => {
       instance
-        .post("post", postInfos)
+        .post("post", postInfos, axiosAuth)
         .then(function (response) {
           commit(response.data);
           console.log(response.data);
+          commit("logUser", response.data.user);
           return response;
         })
         .catch(function () {});
     },
     getAllPosts: ({ commit }) => {
       instance
-        .get("post")
+        .get("post", axiosAuth)
         .then(function (response) {
           commit("postInfos", response.data);
           console.log(response.data);
@@ -158,7 +157,7 @@ const store = createStore({
     },
     getPostInfos: ({ commit }, postId) => {
       instance
-        .get("post/" + postId)
+        .get("post/" + postId, axiosAuth)
         .then(function (response) {
           commit("getOnePost", response.data);
           console.log(response.data);
@@ -171,7 +170,7 @@ const store = createStore({
     },
     modifyPost: ({ commit }, [id, getOnePost]) => {
       instance
-        .put(`/post/${id}`, getOnePost)
+        .put(`/post/${id}`, getOnePost, axiosAuth)
         .then(function (response) {
           commit(response.data);
           console.log(response.data);
@@ -181,7 +180,7 @@ const store = createStore({
     },
     likePost: ({ commit }, [id, postInfos]) => {
       instance
-        .post(`/post/${id}/like`, postInfos)
+        .post(`/post/${id}/like`, postInfos, axiosAuth)
         .then(function (response) {
           commit(response.data);
           console.log(response.data);

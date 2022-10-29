@@ -4,7 +4,7 @@
         <img src="../assets/icon-left-font-monochrome-black.png" alt="logo groupomania" class="logo__img">
     </div>
 
-    <div class="card">
+    <div class="card card--auth">
 
       <h1 class="card__title" v-if="mode == 'login'">Connexion</h1>
       <h1 class="card__title" v-else>Inscription</h1>
@@ -143,20 +143,19 @@
     .form-row {
       display: flex;
       margin: 16px 0px;
-      gap:16px;
+      gap: 16px;
       flex-wrap: wrap;
     }
   
     .form-row__input {
       padding:8px;
       border: none;
-      border-radius: 8px;
       background:#f2f2f2;
       font-weight: 500;
       font-size: 16px;
       flex:1;
       min-width: 100px;
-      color: black;
+      color: #4E5166;
     }
   
     .form-row__input::placeholder {

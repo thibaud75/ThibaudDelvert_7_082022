@@ -1,5 +1,8 @@
 <template>
+
   <router-view></router-view>
+  
+
 </template>
 
 <script>
@@ -40,10 +43,21 @@ export default {
   }
 
   img {
-    max-width: 100%;
-    border-radius: 8px;
+    /* max-width: 100%;
+    border-radius: 8px; */
   }
   
+  .logo{
+      margin-bottom: 5%;
+  }
+
+    .logo__img{
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      object-position: center;
+  }
+
   .card {
     max-width: 100%;
     width: 540px;
@@ -51,7 +65,11 @@ export default {
     border-radius: 16px;
     padding:32px;
   }
-  
+
+  .card--auth{
+    border: 6px solid #FFD7D7;
+  }
+
   .card__title {
     text-align:center;
     font-weight: 800;
@@ -66,10 +84,10 @@ export default {
     .button {
       background: #2196F3;
       color:white;
-      border-radius: 8px;
       font-weight: 800;
       font-size: 15px;
-      border: none;
+      border: 4px solid black;
+      margin-top: 1%;
       width: 100%;
       padding: 16px;
       transition: .4s background-color;
@@ -104,7 +122,7 @@ export default {
     
     p{
       text-align: center;
-      margin: 2%;
+      margin: 2% 0;
     }
 
     ul {
