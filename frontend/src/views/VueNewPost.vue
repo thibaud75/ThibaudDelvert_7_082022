@@ -18,6 +18,10 @@
               <label for="description">Description</label>
               <textarea id="description" class="form--textarea" rows="5" v-model="description"></textarea>
 
+              <div class="form-row" v-if="status == 'error_post'">
+                  Il manque des infos
+              </div>
+
               <input type="file" id="file" class="button" ref="file" v-on:change="onFileChange"/>
 
               <button type="submit" class="button" @click="createPost()" :class="{'button--disabled' : !validatedFields}">Publier mon post</button>
@@ -28,7 +32,7 @@
 
 <script>
 
-// import { mapState } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
     name: 'VueNewPost',
@@ -48,7 +52,8 @@ export default {
         return false;
         }
       
-       }
+       },
+       ...mapState(['status'])
     },
     methods: {
         createPost: function () {
@@ -97,7 +102,7 @@ export default {
 <style scoped>
 
 .card{
-  
+    border: 6px solid #FFD7D7;
 }
 
 #form{
@@ -109,6 +114,9 @@ export default {
   margin-top: 1%;
 }
 
+input::file-selector-button {
+  display: none;
+}
 .form--textarea{
   height: 100px;
   margin-top: 1%;

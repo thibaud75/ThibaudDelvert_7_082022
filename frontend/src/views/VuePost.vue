@@ -131,7 +131,7 @@
         }
 
     .logo__img{
-        width: 40%;
+        width: 300px;
         height: 130px;
         object-fit: cover;
         object-position: center;
@@ -192,14 +192,14 @@
     .ul--post{
       border: 4px solid #4E5166;
       background-color: #FFD7D7;
-      width: 50%;
     }
 
     .img--post{
       max-width: 100%;
       padding: 2%;
       width: 100%;
-      height: 500px;
+      height: 100vh;
+      object-fit: cover;
     }
     
 </style>

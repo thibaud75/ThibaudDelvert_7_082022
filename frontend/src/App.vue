@@ -22,7 +22,7 @@ export default {
     margin:0;
     padding: 0;
     box-sizing: border-box;
-    outline: 2px solid rgb(11, 23, 189);
+    /* outline: 2px solid rgb(11, 23, 189); */
   }
   
   #app {
@@ -86,7 +86,7 @@ export default {
       color:white;
       font-weight: 800;
       font-size: 15px;
-      border: 4px solid black;
+      border: 4px solid #4E5166;
       margin-top: 1%;
       width: 100%;
       padding: 16px;

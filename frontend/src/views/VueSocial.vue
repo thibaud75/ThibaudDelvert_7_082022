@@ -111,7 +111,7 @@
         }
 
     .logo__img{
-        width: 40%;
+        width: 300px;
         height: 130px;
         object-fit: cover;
         object-position: center;
@@ -121,6 +121,7 @@
     .card{
         width: unset;
         display: flex;
+        border: 4px solid black;
         align-items: center;
         flex-direction: column;
         background-image: linear-gradient(62deg, #FD2D01 0%, #FFD7D7 100%);
@@ -139,11 +140,6 @@
 
     }
 
-    .div--social{
-
-    }
-
-
     .ul--social{
       display: flex;
       flex-wrap: wrap;
@@ -154,10 +150,18 @@
       width: 18%;
       background-color: #FFD7D7;
       transition: all 0.1s ease-in-out;
+      overflow: scroll;
 
     }
 
     h2{
       margin-bottom: 5%;
     }
+
+    @media (max-width: 768px) {
+      .li--social{
+        width: unset;
+        margin-bottom: 5%;
+      }
+}
 </style>

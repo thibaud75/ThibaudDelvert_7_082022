@@ -18,9 +18,9 @@
               <label for="description">Description</label>
               <textarea id="description" class="form--textarea" rows="5" v-model="description"></textarea>
 
-            <input type="file" id="file" ref="file" v-on:change="onFileChange"/>
+            <input type="file" id="file" class="button" ref="file" v-on:change="onFileChange"/>
  
-            <button :disable="title ===''" type="submit" class="button" @click="editPost()">Publier mon post</button>
+            <button type="submit" class="button" @click="editPost()" :class="{'button--disabled' : !validatedFields}">Publier mon post</button>
 
 
         </form>   
@@ -33,13 +33,24 @@ import { mapState } from 'vuex'
 
 export default {
 name: 'VueEdit',
+data: function () {
+        return {
+          title: '',
+          description: '',
+          auteur: '',
+        }
+      },
 props: ["id"],
-// mounted: function () {
-//       this.$store.dispatch('getUserInfos');
-//       this.$store.dispatch('getAllPosts');
-//       this.$store.dispatch("getPostInfos", this.id);
-//     },
 computed: {
+  validatedFields: function () {
+
+      if (this.title != "" && this.description != "" && this.auteur != "") {
+        return true;
+      } else {
+        return false;
+        }
+
+      },
       ...mapState({
         user: 'userInfos',
         post: 'postInfos',
@@ -86,6 +97,9 @@ editPost: function() {
 
 <style scoped>
 
+.card{
+    border: 6px solid #FFD7D7;
+}
 
 #form{
   display: flex;
@@ -96,6 +110,9 @@ editPost: function() {
   margin-top: 1%;
 }
 
+input::file-selector-button {
+  display: none;
+}
 .form--textarea{
   height: 100px;
   margin-top: 1%;

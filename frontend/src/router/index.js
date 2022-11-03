@@ -6,6 +6,7 @@ import Social from "@/views/VueSocial.vue";
 import Newpost from "@/views/VueNewPost.vue";
 import Post from "@/views/VuePost.vue";
 import Edit from "@/views/VueEdit.vue";
+import PageNotFound from "@/views/VuePageNotFound.vue";
 
 const routes = [
   {
@@ -41,6 +42,12 @@ const routes = [
     name: "Edit",
     path: "/edit/:id",
     component: Edit,
+    props: true,
+  },
+  {
+    name: "PageNotFound",
+    path: "/:pathMatch(.*)*",
+    component: PageNotFound,
     props: true,
   },
 ];
