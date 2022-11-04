@@ -113,19 +113,19 @@ const store = createStore({
       });
     },
     getUserInfos: ({ commit }) => {
-      console.log("getUserInfos " + user.userId);
-      console.log(
-        "id en storage " + JSON.parse(localStorage.getItem("user")).userId
-      );
+      // console.log("getUserInfos " + user.userId);
+      // console.log(
+      //   "id en storage " + JSON.parse(localStorage.getItem("user")).userId
+      // );
       instance
         .get("auth/infos/" + JSON.parse(localStorage.getItem("user")).userId)
         .then(function (response) {
           commit("userInfos", response.data);
-          console.log(response.data);
+          // console.log(response.data);
           return response;
         })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
         })
         .catch(function () {});
     },
@@ -136,7 +136,7 @@ const store = createStore({
         .post("post", postInfos, axiosAuth)
         .then(function (response) {
           commit(response.data);
-          console.log(response.data);
+          // console.log(response.data);
           commit("logUser", response.data.user);
           return response;
         })
@@ -151,11 +151,11 @@ const store = createStore({
         .get("post", axiosAuth)
         .then(function (response) {
           commit("postInfos", response.data);
-          console.log(response.data);
+          // console.log(response.data);
           return response;
         })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
         })
         .catch(function () {});
     },
@@ -164,11 +164,11 @@ const store = createStore({
         .get("post/" + postId, axiosAuth)
         .then(function (response) {
           commit("getOnePost", response.data);
-          console.log(response.data);
+          // console.log(response.data);
           return response;
         })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
         })
         .catch(function () {});
     },
@@ -177,7 +177,7 @@ const store = createStore({
         .put(`/post/${id}`, getOnePost, axiosAuth)
         .then(function (response) {
           commit(response.data);
-          console.log(response.data);
+          // console.log(response.data);
           return response;
         })
         .catch(function () {});
@@ -187,7 +187,7 @@ const store = createStore({
         .post(`/post/${id}/like`, postInfos, axiosAuth)
         .then(function (response) {
           commit(response.data);
-          console.log(response.data);
+          // console.log(response.data);
           return response;
         })
         .catch(function () {});
