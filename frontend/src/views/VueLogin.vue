@@ -110,7 +110,6 @@
             prenom: this.prenom,
             password: this.password,
           }).then(function () {
-            // self.login();
             self.switchToLogin();
           }, function (error) {
             console.log(error);

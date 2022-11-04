@@ -64,16 +64,12 @@ exports.modifyPost = (req, res, next) => {
   delete postObject._userId;
   Post.findOne({ _id: req.params.id })
     .then((post) => {
-      // if (post.userId != req.auth.userId) {
-      //   res.status(401).json({ message: "Not authorized" });
-      // } else {
       Post.updateOne(
         { _id: req.params.id },
         { ...postObject, _id: req.params.id }
       )
         .then(() => res.status(200).json({ message: "Objet modifié!" }))
         .catch((error) => res.status(401).json({ error }));
-      // }
     })
     .catch((error) => {
       res.status(400).json({ error });
@@ -83,9 +79,6 @@ exports.modifyPost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
   Post.findOne({ _id: req.params.id })
     .then((post) => {
-      // if (post.userId != req.auth.userId) {
-      //   res.status(401).json({ message: "Not authorized" });
-      // } else {
       const filename = post.imageUrl.split("/images/")[1];
       fs.unlink(`images/${filename}`, () => {
         Post.deleteOne({ _id: req.params.id })
@@ -94,7 +87,6 @@ exports.deletePost = (req, res, next) => {
           })
           .catch((error) => res.status(401).json({ error }));
       });
-      // }
     })
     .catch((error) => {
       res.status(500).json({ error });
@@ -111,7 +103,7 @@ exports.likePost = (req, res, next) => {
       // j'augmente le nombre de like
       // ajouter l'id de l'utilisateur à la liste des gens qui aiment
       post.usersLiked.push(req.body.userId);
-      // post.usersLiked.push(req.auth.userId);
+
       console.log(req.body.userId);
       post
         .save()

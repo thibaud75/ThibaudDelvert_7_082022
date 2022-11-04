@@ -146,24 +146,6 @@ const store = createStore({
         });
     },
 
-    // createPost: ({ commit }, postInfos) => {
-    //   return new Promise((resolve, reject) => {
-    //     commit;
-    //     instance
-    //       .post("post", postInfos, axiosAuth)
-    //       .then(function (response) {
-    //         // commit(response);
-    //         console.log(response);
-    //         // commit("logUser", response.data.user);
-    //         resolve(response);
-    //       })
-    //       .catch(function (error) {
-    //         commit("setStatus", "error_post");
-    //         reject(error);
-    //       });
-    //   });
-    // },
-
     getAllPosts: ({ commit }) => {
       instance
         .get("post", axiosAuth)
