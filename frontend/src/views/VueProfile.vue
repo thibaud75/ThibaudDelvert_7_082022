@@ -8,7 +8,6 @@
       <h1 class="card__title">Bienvenue</h1>
       <p class="card__info">{{user.prenom}}</p> 
       <p class="card__info">{{user.nom}} </p> 
-      <p class="card__info">{{user.email}}</p>
       <div class="form-row">
         <button @click="social()" class="button">
           Continuer vers l'accueil
